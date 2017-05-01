@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: ba6b5b782137deb4485d48bec251bb24
+timeCreated: 1492355662
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Cavorting
+  fontNames:
+  - Cavorting
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

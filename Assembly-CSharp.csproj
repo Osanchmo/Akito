@@ -47,7 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scritps\CameraController.cs" />
+     <Compile Include="Assets\Scritps\FlappyController.cs" />
+     <Compile Include="Assets\Scritps\MenuController.cs" />
+     <Compile Include="Assets\Scritps\OnPlayerDestroy.cs" />
      <Compile Include="Assets\Scritps\PlayerController.cs" />
+     <Compile Include="Assets\Scritps\WinController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

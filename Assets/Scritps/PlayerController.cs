@@ -1,48 +1,106 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
 
 	Rigidbody2D jugador;
-	public float gravedad, velocidad, salto;
+	public float velocidad, salto, bigJump;
+	bool isGrounded, flappy;
 	bool win;
-	// Use this for initialization
+	
+	
 	void Start () 
 	{
 		jugador = GetComponent<Rigidbody2D>();
+		flappy = false;
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
 	{
+		if(Input.GetKey(KeyCode.Escape))
+		{SceneManager.LoadScene("menu");}
+		
 		if(!win)
 		{
-			if(!Input.GetKey(KeyCode.Escape))
-			{
-				Physics.gravity = new Vector3(0,-gravedad,0);
-				if (IsGrounded())
+				if (isGrounded)
 				{
-					if (Input.GetButton("Fire1"))
+					if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.Space))
 					{
-						jugador.velocity = new Vector3(0,salto,0);
+						jump();
 					}
+				}
+				else if (flappy)
+				{
+					if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.Space))
+					{
+						flappyJump();
+					}
+
 				}
 				transform.position = 
 				new Vector3(transform.position.x + velocidad, transform.position.y, transform.position.z);	
-			}
+			}	
+	}
+
+	void OnCollisionEnter2D(Collision2D col)
+	{
+		if (col.transform.tag == "Ground"){
+			isGrounded = true;
+		} else if (col.transform.tag == "Groundx2")
+		{
+			megaJump();
 		}
 	}
-	bool IsGrounded()
-	{
-		return Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+	void OnCollisionExit2D(Collision2D col){
+		if (col.transform.tag == "Ground")
+		{
+			isGrounded = false;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
 	{
-		if (col.tag == "Meta")
+		if(col.transform.tag == "flappy") 
+		{
+			if (flappy){
+				flappy = false;
+			} else 
+			{
+				isGrounded = true;
+				flappy = true;
+			}
+
+		} else if (col.tag == "Meta")
 		{
 			win = true;
+			SceneManager.LoadScene("win");
 		}
 	}
+
+	void OnTriggerStay2D(Collider2D col){
+		if(col.transform.tag == "Groundx2") {
+			isGrounded = true;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D col) {
+		if(col.transform.tag == "Groundx2") {
+			isGrounded = false;
+		}
+	}
+
+	void jump(){
+		jugador.velocity = new Vector3(0f, salto, 0f);
+		isGrounded = false;
+	}
+	void flappyJump(){
+		jugador.velocity = new Vector3(0f, salto, 0f);
+	}
+	void megaJump(){
+		jugador.velocity = new Vector3(0f, bigJump, 0f);
+		isGrounded = false;
+	}
+
 }
